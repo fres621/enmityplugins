@@ -1,29 +1,67 @@
-name: Build Folders on Push
+name: Autobuild
 
 on:
-  push:
-    branches:
-      - main  # Change to your desired branch
+    push:
+        branches:
+            - main
+    workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+    build:
+        name: Compile Plugins
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+        steps:
+            - name: Clean working directory
+              run: rm -rf /home/runner/work/${{ github.repository }}
 
-      - name: Install Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14
+            - name: Checkout code
+              uses: actions/checkout@v2
 
-      - name: Build Folders
-        run: |
-          for dir in */; do
-            echo "Building $dir"
-            cd $dir
-            npm ci  # Use `npm install` if you want to update dependencies
-            npm run build
-            cd ..
-          done
+            - name: Setup Node.js
+              uses: actions/setup-node@v2
+              with:
+                  node-version: 18.x
+
+            - name: Install the Dependencies
+              run: npm install
+
+            - name: Detect changed files
+              id: files
+              uses: jitterbit/get-changed-files@v1
+              continue-on-error: true
+
+            - name: Build
+              run: npm run build ${{ steps.files.outputs.all }}
+
+            - name: Stage build
+              uses: actions/upload-artifact@v2
+              with:
+                  name: build-artifact
+                  path: dist
+                  retention-days: 1
+
+            - name: Restore repo
+              uses: actions/checkout@v2
+              with:
+                  ref: main
+
+            - name: Apply build
+              uses: actions/download-artifact@v2
+              with:
+                  name: build-artifact
+                  path: dist
+
+            - name: Commit
+              run: |
+                  git config advice.addIgnoredFile true
+                  git add -f ./**
+                  git config --local user.email "actions@github.com"
+                  git config --local user.name "Plugin Builder"
+                  git commit -m "Publish build" || true
+
+            - name: Push
+              uses: ad-m/github-push-action@master
+              with:
+                  github_token: ${{ github.token }}
+                  branch: main
