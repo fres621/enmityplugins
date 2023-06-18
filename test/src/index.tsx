@@ -12,7 +12,7 @@ const SilentTyping: Plugin = {
    ...manifest,
 
    onStart() {
-      Patcher.before(handleClick, "handleClick", function ([args]) {
+      Patcher.before(handleClick, "handleClick", function (_, [args]) {
          const { href } = args;
          const isSpotify = href.startsWith("https://open.spotify.com/");
          if (!isSpotify) return;
