@@ -1,0 +1,11 @@
+{
+    "name": "SpotifyPreview",
+    "version": "1.0.0",
+    "description": "Lets you preview (30s of audio) Spotify songs by pressing the links.",
+    "authors": [
+       {
+          "name": "fres",
+          "id": "843448897737064448"
+       }
+    ]
+ }
