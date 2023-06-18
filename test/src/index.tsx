@@ -12,13 +12,13 @@ const SpotifyPreview: Plugin = {
    ...manifest,
 
    onStart() {
-      Patcher.before(handleClick, "handleClick", function (_, [args]) {
-         const { href } = args;
+      Patcher.instead(handleClick, "handleClick", (self, args, orig) => {
+         const { href } = args[0];
+         if (!href) return orig.apply(self, args); // calls original function
          const isSpotify = href.startsWith("https://open.spotify.com/");
-         if (!isSpotify) return;
-         args.href = undefined;
+         if (!isSpotify) return orig.apply(self, args); // calls original function
          show(href);
-     });
+      });
    },
 
    onStop() {
