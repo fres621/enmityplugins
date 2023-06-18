@@ -8,7 +8,7 @@ const Patcher = create('spotify-preview');
 
 const handleClick = getByProps("handleClick");
 
-const SilentTyping: Plugin = {
+const SpotifyPreview: Plugin = {
    ...manifest,
 
    onStart() {
@@ -26,4 +26,4 @@ const SilentTyping: Plugin = {
    }
 };
 
-registerPlugin(SilentTyping);
+registerPlugin(SpotifyPreview);
