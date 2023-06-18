@@ -1,9 +1,4 @@
 {
-   "name": "spotify-preview",
-   "description": "Lets you preview (30s of audio) Spotify songs by pressing the links.",
-   "version": "1.0.0",
-   "license": "GPL-3.0",
-   "author": "fres",
    "scripts": {
       "build": "rollup -c --configPlugin esbuild"
    },
