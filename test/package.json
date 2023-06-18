@@ -26,7 +26,6 @@
       "esbuild-windows-64": "^0.14.21"
    },
    "dependencies": {
-      "buffer": "^6.0.3",
       "enmity": "*"
    }
 }
