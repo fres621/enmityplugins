@@ -1,6 +1,5 @@
-import { Toasts, Constants } from "enmity/metro/common"
-import { getModule, getByName, getByProps } from 'enmity/metro';
-import { React } from 'enmity/metro/common';
+import { React, Toasts, Constants } from "enmity/metro/common";
+import { getModule, getByName, getByProps } from "enmity/metro";
 
 const { ThemeColorMap } = Constants;
 
@@ -13,10 +12,12 @@ function renderActionSheet(component: any, props: { [key: string]: any }) {
     ? LazyActionSheet?.openLazy(new Promise(r => r({ default: component })), "ActionSheet", props)
     : Toasts.open("You cannot open ActionSheets on this version! Upgrade to 163+");
 };
+
 const { BottomSheetScrollView } = getByProps("BottomSheetScrollView");
 
-let WebView = getByName("WebView");
+const WebView = getByName("WebView") || getByProps("WebView").default.render;
 let wv = (link)=>{ 
+  console.log(WebView);
     const bgcolor = ThemeColorMap.MODAL_BACKGROUND;
     return (
         <WebView
