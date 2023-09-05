@@ -4,7 +4,7 @@ import { React } from 'enmity/metro/common';
 
 const { ThemeColorMap } = Constants;
 
-const { default: { render: ActionSheet } } = (getModule(x => x.default?.render?.name == "ActionSheet") ?? { default: { render: false } });
+const ActionSheet = getByProps("ActionSheet")?.ActionSheet ?? getModule((x) => x.render?.name === "ActionSheet");
 const LazyActionSheet = getByProps("openLazy", "hideActionSheet");
 
 // https://discord.com/channels/1015931589865246730/1062531774187573308/1117197626648039494 — Thanks Rosie on Vendetta Discord
