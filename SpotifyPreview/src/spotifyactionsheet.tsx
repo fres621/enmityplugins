@@ -27,7 +27,7 @@ let wv = (link)=>{
       );
 };
 
-function as({'0': link}) {
+function as({link}) {
     return (
         <ActionSheet>
             <BottomSheetScrollView contentContainerStyle={{ marginBottom: 100 }}>
@@ -38,5 +38,5 @@ function as({'0': link}) {
 }
 
 export default function show(url) {
-  renderActionSheet(as, [url]);
+  renderActionSheet(as, [{link: url}]);
 };
