@@ -17,7 +17,6 @@ const { BottomSheetScrollView } = getByProps("BottomSheetScrollView");
 
 const WebView = getByName("WebView") || getByProps("WebView").default.render;
 let wv = (link)=>{ 
-  console.log(WebView);
     const bgcolor = ThemeColorMap.MODAL_BACKGROUND;
     return (
         <WebView
